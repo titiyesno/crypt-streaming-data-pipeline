@@ -1,0 +1,28 @@
+apiVersion: 1
+
+datasources:
+  - name: PostgreSQL
+    type: postgres
+    typeName: PostgreSQL
+    uid: bd936b1d-0923-4ba0-a361-5385d3f6029d
+    orgId: 1
+    typeLogoUrl: "/public/app/plugins/datasource/postgres/img/postgresql_logo.svg"
+    access: proxy
+    url: timescale:5432
+    user: postgres
+    database: ''
+    basicAuth: false
+    isDefault: true
+    jsonData:
+      connMaxLifetime: 14400
+      database: technical_assessment
+      maxIdleConns: 100
+      maxIdleConnsAuto: true
+      maxOpenConns: 100
+      postgresVersion: 1400
+      sslmode: disable
+      timeInterval: 1s
+      timescaledb: true
+    secureJsonData:
+      password: 'password'
+    readOnly: false

@@ -5,7 +5,7 @@ import pandas as pd
 
 def send_data_from_csv(topic=None, csv_path=None):
     # connect to kafka
-    producer = KafkaProducer(bootstrap_servers='localhost:9092')
+    producer = KafkaProducer(bootstrap_servers='kafka:29092') #change this if you run it outside docker
     dataframe = pd.read_csv(csv_path)
 
     # loop each row in dataframe, dump to json and send to kafka
@@ -21,4 +21,4 @@ def send_data_from_csv(topic=None, csv_path=None):
 
 
 if __name__ == '__main__':
-    send_data_from_csv("technical_assessment", "./order_book_mockup.csv")
+    send_data_from_csv("technical_assessment", "/order_book_mockup.csv")

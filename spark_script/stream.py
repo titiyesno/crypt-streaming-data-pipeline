@@ -27,8 +27,9 @@ def foreach_batch_function(df, epoch_id):
 
 def main():
     spark = SparkSession.builder \
-            .appName("Spark-Streamingasd") \
+            .appName("Spark-Streaming") \
             .master("spark://spark:7077") \
+            .config("spark.executor.memory", "512m") \
             .getOrCreate()
      
     spark.sparkContext.setLogLevel("ERROR")
@@ -50,12 +51,12 @@ def main():
     .option("startingOffsets", KAFKA_STARTING_OFFSET) \
     .load() \
     .select(
-        from_json(col("value").cast("string"), schema).alias("parsed_value")
-    ).select(col("parsed_value.*"))
-
+        from_json(col("value").cast("string"), schema).alias("parsed_value"),
+        col("timestamp").alias("event_timestamp")
+    ).select(col("parsed_value.*"), col("event_timestamp"))
+    
     streaming_df.writeStream \
     .foreachBatch(foreach_batch_function)\
-    .trigger(processingTime='1 seconds') \
     .start().awaitTermination()
 
     
